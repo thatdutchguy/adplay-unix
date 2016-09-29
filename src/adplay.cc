@@ -35,7 +35,8 @@
  * (Linux) use getopt.h.
  */
 #if defined (__APPLE__) || (defined(__SVR4) && defined(__sun))
-#	include <unistd.h>
+// #	include <unistd.h>
+#	include "getopt.h"
 #else
 #	ifdef HAVE_GETOPT_H
 #		include <getopt.h>
