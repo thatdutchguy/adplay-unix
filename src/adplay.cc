@@ -28,6 +28,7 @@
 #include <adplug/wemuopl.h>
 #include <adplug/nemuopl.h>
 #include <adplug/surroundopl.h>
+#include <adplug/diskopl.h>
 
 /*
  * Apple (OS X) and Sun systems declare getopt in unistd.h, other systems
@@ -64,7 +65,7 @@
 
 /***** Typedefs *****/
 
-typedef enum { Emu_Satoh, Emu_Ken, Emu_Woody, Emu_Nuked } EmuType;
+typedef enum { Emu_Satoh, Emu_Ken, Emu_Woody, Emu_Nuked, Emu_Diskopl } EmuType;
 
 /***** Global variables *****/
 
@@ -262,6 +263,7 @@ static int decode_switches(int argc, char **argv)
 	else if(!strcmp(optarg, "ken")) cfg.emutype = Emu_Ken;
 	else if(!strcmp(optarg, "woody")) cfg.emutype = Emu_Woody;
 	else if(!strcmp(optarg, "nuked")) cfg.emutype = Emu_Nuked;
+	else if(!strcmp(optarg, "diskopl")) cfg.emutype = Emu_Diskopl;
 	else {
 	  message(MSG_ERROR, "unknown emulator -- %s", optarg);
 	  exit(EXIT_FAILURE);
@@ -453,6 +455,12 @@ int main(int argc, char **argv)
   		}
   	}
   	break;
+  case Emu_Diskopl:
+    char diskopl_output[strlen(cfg.device) + 5];
+    strcpy(diskopl_output, cfg.device);
+    strcat(diskopl_output, ".opl");
+    opl = new CDiskopl(diskopl_output);
+    break;
   }
 
   // init player
